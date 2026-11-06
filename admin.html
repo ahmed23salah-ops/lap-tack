@@ -42,9 +42,9 @@
         </div>
 
         <div class="form-group">
-            <label>صور اللابتوب (يمكنك اختيار عدة صور معاً):</label>
+            <label>صور اللابتوب (حدد عدة صور دفعة واحدة):</label>
             <input type="file" id="productImages" accept="image/*" multiple required>
-            <small style="color: #666; display: block; margin-top: 4px;">اضغط على زر اختيار الملفات وحدد أكثر من صورة دفعة واحدة.</small>
+            <small style="color: #666; display: block; margin-top: 4px;">اضغط مع الاستمرار على زر Ctrl واختار كل صور اللابتوب مرة واحدة.</small>
         </div>
 
         <button type="submit">إضافة اللابتوب للموقع</button>
@@ -57,7 +57,6 @@
 </div>
 
 <script>
-    // دالة لتحويل عدة صور إلى مصفوفة Base64
     function getImagesBase64(fileInput) {
         return new Promise((resolve) => {
             const files = Array.from(fileInput.files);
@@ -75,17 +74,14 @@
         });
     }
 
-    // جلب المنتجات من localStorage
     function getProducts() {
         return JSON.parse(localStorage.getItem('labtech_products')) || [];
     }
 
-    // حفظ المنتجات
     function saveProducts(products) {
         localStorage.setItem('labtech_products', JSON.stringify(products));
     }
 
-    // عرض المنتجات في لوحة التحكم
     function renderAdminProducts() {
         const container = document.getElementById('adminProductsContainer');
         const products = getProducts();
@@ -117,7 +113,6 @@
         });
     }
 
-    // حذف منتج
     function deleteProduct(index) {
         if (confirm('هل أنت متأكد من حذف هذا اللابتوب؟')) {
             const products = getProducts();
@@ -127,7 +122,6 @@
         }
     }
 
-    // معالجة إرسال النموذج وإضافة المنتج
     document.getElementById('productForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -143,7 +137,7 @@
             name: name,
             price: price,
             specs: specs,
-            images: imagesArray // حفظ مصفوفة الصور
+            images: imagesArray
         };
 
         const products = getProducts();
@@ -155,7 +149,6 @@
         renderAdminProducts();
     });
 
-    // تشغيل الدالة عند تحميل الصفحة
     renderAdminProducts();
 </script>
 
