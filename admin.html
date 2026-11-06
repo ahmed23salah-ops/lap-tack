@@ -1,147 +1,177 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة تحكم LAB TECH</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-body { background: #f5f7fb; padding: 20px; color: #172033; }
-.container { max-width: 650px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-h2 { margin-bottom: 20px; color: #080d18; border-right: 4px solid #168cff; padding-right: 10px; }
-.form-group { margin-bottom: 15px; }
-label { display: block; margin-bottom: 5px; font-weight: bold; }
-input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; }
-button { background: #168cff; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
-button:hover { background: #0872d8; }
-.preview-img { width: 100px; height: 70px; object-fit: contain; margin-top: 10px; display: none; border: 1px solid #ddd; border-radius: 6px; }
-.product-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid #e2e8f0; }
-.product-item img { width: 50px; height: 50px; object-fit: contain; border-radius: 4px; }
-.delete-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; width: auto; margin: 0; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم LAB TECH</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --danger: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--dark); direction: rtl; padding: 2rem; }
+        .container { max-width: 900px; margin: 0 auto; background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { margin-bottom: 1.5rem; color: var(--dark); border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        input, select, textarea { width: 100%; padding: 0.7rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; }
+        button { background: var(--primary); color: var(--white); border: none; padding: 0.8rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
+        button:hover { background: #1d4ed8; }
+        .product-list { margin-top: 2rem; }
+        .admin-item { display: flex; justify-content: space-between; align-items: center; background: #f1f5f9; padding: 1rem; border-radius: 6px; margin-bottom: 0.8rem; }
+        .btn-delete { background: var(--danger); padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+        .btn-delete:hover { background: #dc2626; }
+        .back-link { display: inline-block; margin-bottom: 1.5rem; color: var(--primary); text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>إضافة لابتوب جديد 💻</h2>
-    
-    <div class="form-group">
-        <label>اسم اللابتوب:</label>
-        <input type="text" id="name" placeholder="مثال: Dell Latitude 5400">
-    </div>
-
-    <div class="form-group">
-        <label>الشركة:</label>
-        <select id="brand">
-            <option value="Dell">Dell</option>
-            <option value="HP">HP</option>
-            <option value="Lenovo">Lenovo</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>الرامات:</label>
-        <select id="ram">
-            <option value="8GB">8GB</option>
-            <option value="16GB">16GB</option>
-            <option value="32GB">32GB</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>المواصفات الكاملة:</label>
-        <input type="text" id="specs" placeholder="Core i5 8th Gen | RAM 8GB | SSD 256GB">
-    </div>
-
-    <div class="form-group">
-        <label>السعر (بالجنيه):</label>
-        <input type="number" id="price" placeholder="9500">
-    </div>
-
-    <!-- إضافة صورة من الموبايل أو الكمبيوتر -->
-    <div class="form-group">
-        <label>اختر صورة اللابتوب من جهازك 📷:</label>
-        <input type="file" id="imageFile" accept="image/*" onchange="previewImage(event)">
-        <img id="imgPreview" class="preview-img" alt="معاينة الصورة">
-    </div>
-
-    <button onclick="addProduct()">حفظ اللابتوب ➕</button>
-
-    <h3 style="margin-top: 30px;">الأجهزة المضافة حالياً:</h3>
-    <div id="adminProductList"></div>
-</div>
-
-<script>
-let currentBase64Image = "";
-
-// معاينة الصورة عند اختيارها تحويلها لنص
-function previewImage(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            currentBase64Image = e.target.result;
-            const img = document.getElementById('imgPreview');
-            img.src = currentBase64Image;
-            img.style.display = 'block';
+    <script>
+        // نظام حماية لوحة التحكم بكلمة سر
+        const secretPass = "8642"; // 👈 يمكنك تغيير كلمة السر هنا بالرقم الذي تريده
+        const userInput = prompt("برجاء أدخل كلمة السر لدخول لوحة تحكم LAB TECH:");
+        
+        if (userInput !== secretPass) {
+            alert("كلمة السر غير صحيحة!");
+            window.location.href = "index.html";
         }
-        reader.readAsDataURL(file);
-    }
-}
+    </script>
 
-function getProducts() {
-    return JSON.parse(localStorage.getItem('my_laptops')) || [];
-}
+    <div class="container">
+        <a href="index.html" class="back-link">← العودة لموقع العرض الرئيسي</a>
+        <h2>إدارة لابتوبات LAB TECH (لوحة التحكم)</h2>
 
-function addProduct() {
-    const name = document.getElementById('name').value;
-    const brand = document.getElementById('brand').value;
-    const ram = document.getElementById('ram').value;
-    const specs = document.getElementById('specs').value;
-    const price = document.getElementById('price').value;
+        <div class="form-group">
+            <label>اسم الموديل:</label>
+            <input type="text" id="pName" placeholder="مثال: Dell Latitude 5490">
+        </div>
 
-    if(!name || !price) {
-        alert("يرجى كتابة اسم اللابتوب والسعر!");
-        return;
-    }
+        <div class="form-group">
+            <label>الماركة:</label>
+            <select id="pBrand">
+                <option value="Dell">Dell</option>
+                <option value="HP">HP</option>
+                <option value="Lenovo">Lenovo</option>
+            </select>
+        </div>
 
-    const image = currentBase64Image || "https://placehold.co/600x400?text=Laptop";
+        <div class="form-group">
+            <label>السعر (بالجنيه):</label>
+            <input type="number" id="pPrice" placeholder="مثال: 12500">
+        </div>
 
-    const products = getProducts();
-    products.push({ id: Date.now(), name, brand, ram, specs, price: Number(price), image });
-    localStorage.setItem('my_laptops', JSON.stringify(products));
+        <div class="form-group">
+            <label>المواصفات التفصيلية:</label>
+            <textarea id="pSpecs" rows="3" placeholder="Core i5 الجيل الثامن - رامات 16 - هارد 256 SSD"></textarea>
+        </div>
 
-    alert("تم إضافة اللابتوب مع الصورة بنجاح! 🥳");
-    location.reload();
-}
+        <div class="form-group">
+            <label>صورة اللابتوب (رفع ملف أو رابط):</label>
+            <input type="file" id="pImageFile" accept="image/*" onchange="convertImage(this)">
+            <input type="hidden" id="pImageBase64">
+        </div>
 
-function deleteProduct(id) {
-    let products = getProducts();
-    products = products.filter(p => p.id !== id);
-    localStorage.setItem('my_laptops', JSON.stringify(products));
-    renderAdminProducts();
-}
+        <button onclick="addProduct()">إضافة اللابتوب للموقع 🚀</button>
 
-function renderAdminProducts() {
-    const list = document.getElementById('adminProductList');
-    const products = getProducts();
-    list.innerHTML = "";
-    products.forEach(p => {
-        list.innerHTML += `
-            <div class="product-item">
-                <img src="${p.image}" alt="صورة الجهاز">
-                <div>
-                    <strong>${p.name}</strong><br>
-                    <small>${p.price} جنيه</small>
-                </div>
-                <button class="delete-btn" onclick="deleteProduct(${p.id})">حذف</button>
-            </div>
-        `;
-    });
-}
+        <div class="product-list">
+            <h2>اللابتوبات الحالية في المخزن</h2>
+            <div id="adminProductsContainer"></div>
+        </div>
+    </div>
 
-renderAdminProducts();
-</script>
+    <script>
+        let products = [];
+        let currentImageBase64 = "";
 
+        function loadAdminProducts() {
+            const stored = localStorage.getItem('labtech_products');
+            if (stored) {
+                products = JSON.parse(stored);
+            }
+            renderAdminList();
+        }
+
+        function convertImage(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentImageBase64 = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function addProduct() {
+            const name = document.getElementById('pName').value.trim();
+            const brand = document.getElementById('pBrand').value;
+            const price = document.getElementById('pPrice').value.trim();
+            const specs = document.getElementById('pSpecs').value.trim();
+
+            if (!name || !price) {
+                alert("من فضلك أدخل اسم اللابتوب والسعر على الأقل!");
+                return;
+            }
+
+            const newProduct = {
+                id: Date.now(),
+                name,
+                brand,
+                price,
+                specs,
+                image: currentImageBase64 || 'https://via.placeholder.com/300x200?text=No+Image'
+            };
+
+            products.push(newProduct);
+            localStorage.setItem('labtech_products', JSON.stringify(products));
+            
+            // إعادة تعيين الحقول
+            document.getElementById('pName').value = '';
+            document.getElementById('pPrice').value = '';
+            document.getElementById('pSpecs').value = '';
+            document.getElementById('pImageFile').value = '';
+            currentImageBase64 = '';
+
+            renderAdminList();
+            alert("تم إضافة اللابتوب بنجاح وتم تحديث الموقع الرئيسي فوراً! 🎉");
+        }
+
+        function deleteProduct(id) {
+            if (confirm("هل أنت متأكد من حذف هذا الجهاز من المخزن؟")) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('labtech_products', JSON.stringify(products));
+                renderAdminList();
+            }
+        }
+
+        function renderAdminList() {
+            const container = document.getElementById('adminProductsContainer');
+            container.innerHTML = '';
+
+            if (products.length === 0) {
+                container.innerHTML = '<p style="color: #64748b;">لا توجد لابتوبات مضافة حالياً.</p>';
+                return;
+            }
+
+            products.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'admin-item';
+                item.innerHTML = `
+                    <div>
+                        <strong>${p.name}</strong> - <span>${p.price} جنيه</span>
+                    </div>
+                    <button class="btn-delete" onclick="deleteProduct(${p.id})">حذف 🗑️</button>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        window.onload = loadAdminProducts;
+    </script>
 </body>
 </html>

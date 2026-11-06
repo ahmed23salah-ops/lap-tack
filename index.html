@@ -1,454 +1,150 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LAB TECH | لاب تك</title>
-
-<!-- أيقونة المتصفح -->
-<link rel="icon" href="logo.jpg">
-
-<style>
-/* تنسيقات عامة */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    background: #f5f7fb;
-    color: #172033;
-}
-
-/* HEADER */
-header {
-    background: #080d18;
-    color: white;
-    padding: 10px 6%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    border-bottom: 2px solid #168cff;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.logo img {
-    width: 75px;
-    height: 75px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #168cff;
-}
-
-nav {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    transition: .3s;
-}
-
-nav a:hover {
-    color: #38bdf8;
-}
-
-.admin-link {
-    background: #168cff;
-    padding: 8px 15px;
-    border-radius: 6px;
-}
-
-/* HERO */
-.hero {
-    background: linear-gradient(120deg, #080d18, #102c55, #0755a5);
-    color: white;
-    padding: 90px 7%;
-    text-align: center;
-}
-
-.hero h1 {
-    font-size: 42px;
-    margin-bottom: 20px;
-}
-
-.hero p {
-    font-size: 18px;
-    color: #dbeafe;
-    margin-bottom: 30px;
-    line-height: 1.8;
-}
-
-.btn {
-    border: none;
-    border-radius: 8px;
-    padding: 14px 24px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: 0.3s ease;
-}
-
-.primary {
-    background: #168cff;
-    color: white;
-}
-
-.primary:hover {
-    background: #0872d8;
-}
-
-/* PRODUCTS CONTAINER & FILTERS */
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 50px auto;
-}
-
-.section-title {
-    font-size: 30px;
-    margin-bottom: 30px;
-    border-right: 5px solid #168cff;
-    padding-right: 12px;
-}
-
-.filters {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-}
-
-.filters input,
-.filters select {
-    padding: 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    flex: 1;
-    min-width: 160px;
-    background: white;
-    font-size: 15px;
-    outline: none;
-}
-
-.products {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-}
-
-.product {
-    background: white;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px #0000000c;
-    transition: .3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.product:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px #00000015;
-}
-
-.product img {
-    width: 100%;
-    height: 220px;
-    object-fit: contain;
-    padding: 15px;
-    background: #fff;
-    border-bottom: 1px solid #f1f5f9;
-}
-
-.product-info {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-}
-
-.product-info h3 {
-    margin-bottom: 12px;
-    font-size: 20px;
-}
-
-.specs {
-    color: #64748b;
-    line-height: 1.8;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-
-.price {
-    color: #0872d8;
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 18px;
-}
-
-.whatsapp {
-    background: #16a34a;
-    color: white;
-    width: 100%;
-}
-
-.whatsapp:hover {
-    background: #12833c;
-}
-
-.empty {
-    text-align: center;
-    padding: 40px;
-    color: #64748b;
-    grid-column: 1 / -1;
-    font-size: 18px;
-}
-
-/* زر الواتساب العائم */
-.floating-whatsapp {
-    position: fixed;
-    bottom: 25px;
-    left: 25px;
-    background: #25d366;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    z-index: 2000;
-    transition: 0.3s;
-    text-decoration: none;
-}
-
-.floating-whatsapp:hover {
-    transform: scale(1.1);
-    background: #1ebe5d;
-}
-
-/* FOOTER */
-footer {
-    background: #080d18;
-    color: white;
-    padding: 40px 7%;
-    text-align: center;
-    margin-top: 70px;
-    border-top: 2px solid #168cff;
-}
-
-.footer-logo {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #168cff;
-    margin-bottom: 15px;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-}
-
-.social-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: white;
-    padding: 12px 22px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.footer-whatsapp { background: #16a34a; }
-.footer-facebook { background: #1877f2; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAB TECH | لابتوبات استيراد بحالة الجديد</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --dark: #1e293b;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --accent: #22c55e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--dark); direction: rtl; }
+        header { background: var(--dark); color: var(--white); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-area img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
+        h1 { font-size: 1.5rem; }
+        nav { display: flex; gap: 15px; }
+        nav a { color: var(--white); text-decoration: none; font-weight: 600; transition: color 0.3s; }
+        nav a:hover { color: var(--primary); }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .hero { background: linear-gradient(135deg, var(--dark), var(--primary)); color: var(--white); padding: 3rem 2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem; }
+        .hero h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.1rem; opacity: 0.9; }
+        .filters { display: flex; gap: 15px; margin-bottom: 2rem; flex-wrap: wrap; background: var(--white); padding: 1rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .filters select, .filters input { padding: 0.7rem; border: 1px solid #cbd5e1; border-radius: 6px; flex: 1; min-width: 200px; font-size: 1rem; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .product-card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; display: flex; flex-direction: column; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-img { width: 100%; height: 200px; object-fit: cover; background: #e2e8f0; }
+        .product-info { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--dark); }
+        .product-specs { font-size: 0.9rem; color: #64748b; margin-bottom: 1rem; line-height: 1.6; flex-grow: 1; }
+        .product-price { font-size: 1.3rem; font-weight: bold; color: var(--primary); margin-bottom: 1rem; }
+        .btn-whatsapp { background: var(--accent); color: var(--white); text-align: center; padding: 0.7rem; border-radius: 6px; text-decoration: none; font-weight: bold; display: block; transition: background 0.3s; }
+        .btn-whatsapp:hover { background: #16a34a; }
+        footer { background: var(--dark); color: var(--white); text-align: center; padding: 1.5rem; margin-top: 3rem; }
+    </style>
 </head>
-
 <body>
 
-<!-- زر واتساب عائم -->
-<a href="https://wa.me/201061543727" class="floating-whatsapp" target="_blank" title="تواصل معنا عبر واتساب">
-    💬
-</a>
+    <header>
+        <div class="logo-area">
+            <img src="logo.jpg" alt="LAB TECH Logo" onerror="this.src='https://via.placeholder.com/45'">
+            <h1>LAB TECH</h1>
+        </div>
+        <nav>
+            <a href="#home">الرئيسية</a>
+            <a href="#products">اللابتوبات</a>
+        </nav>
+    </header>
 
-<!-- HEADER -->
-<header>
-    <div class="logo">
-        <img src="logo.jpg" alt="LAB TECH Logo">
+    <div class="container" id="home">
+        <div class="hero">
+            <h2>أقوى لابتوبات الاستيراد بحالة الزيرو</h2>
+            <p>اختر جهازك المفضل بأفضل الأسعار وبضمان ومواصفات تناسب كل احتياجاتك الهندسية والبرمجية.</p>
+        </div>
+
+        <div class="filters">
+            <input type="text" id="searchInput" placeholder="ابحث باسم الموديل أو المعالج..." oninput="filterProducts()">
+            <select id="brandFilter" onchange="filterProducts()">
+                <option value="">جميع الماركات</option>
+                <option value="Dell">Dell</option>
+                <option value="HP">HP</option>
+                <option value="Lenovo">Lenovo</option>
+            </select>
+        </div>
+
+        <div id="productsGrid" class="products-grid">
+            <!-- سيتم جلب اللابتوبات هنا تلقائياً من الـ localStorage -->
+        </div>
     </div>
 
-    <nav>
-        <a href="#home">الرئيسية</a>
-        <a href="#products">اللابتوبات</a>
-        <a href="admin.html" class="admin-link" target="_blank">لوحة التحكم ⚙️</a>
-    </nav>
-</header>
+    <footer>
+        <p>جميع الحقوق محفوظة © LAB TECH | تواصل معنا عبر واتساب: 201061543727+</p>
+    </footer>
 
-<!-- HERO -->
-<section class="hero" id="home">
-    <h1>مرحباً بك في LAB TECH</h1>
-    <p>اكتشف أفضل أجهزة اللابتوب الاستيراد بأسعار تنافسية ومواصفات متنوعة</p>
-    <button class="btn primary" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
-        تصفح اللابتوبات
-    </button>
-</section>
+    <script>
+        let allProducts = [];
 
-<!-- PRODUCTS -->
-<main class="container" id="products">
-    <h2 class="section-title">أحدث اللابتوبات</h2>
+        function loadProducts() {
+            const stored = localStorage.getItem('labtech_products');
+            if (stored) {
+                allProducts = JSON.parse(stored);
+            } else {
+                // منتجات تجريبية لو اللوكال ستوريدج فاضية
+                allProducts = [
+                    {
+                        id: 1,
+                        name: "Dell Latitude 5490",
+                        brand: "Dell",
+                        price: "12500",
+                        specs: "Core i5 الجيل الثامن - رامات 16 جيجا - هارد 256 SSD - شاشة 14 بوصة",
+                        image: "https://via.placeholder.com/300x200?text=Dell+Laptop"
+                    }
+                ];
+                localStorage.setItem('labtech_products', JSON.stringify(allProducts));
+            }
+            displayProducts(allProducts);
+        }
 
-    <div class="filters">
-        <input type="search" id="search" placeholder="ابحث عن موديل أو مواصفات..." oninput="showProducts()">
+        function displayProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
 
-        <select id="brand" onchange="showProducts()">
-            <option value="">كل الشركات</option>
-            <option value="Dell">Dell</option>
-            <option value="HP">HP</option>
-            <option value="Lenovo">Lenovo</option>
-        </select>
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 2rem;">لا توجد لابتوبات مضافة حالياً.</p>';
+                return;
+            }
 
-        <select id="ram" onchange="showProducts()">
-            <option value="">كل الرامات</option>
-            <option value="8GB">8GB</option>
-            <option value="16GB">16GB</option>
-            <option value="32GB">32GB</option>
-        </select>
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                const message = encodeURIComponent(`مرحباً، أنا مهتم بشراء لابتوب (${p.name}) بسعر (${p.price} جنيه). هل هو متوفر؟`);
+                const whatsappLink = `https://wa.me/201061543727?text=${message}`;
 
-        <select id="sort" onchange="showProducts()">
-            <option value="">ترتيب السعر</option>
-            <option value="low">الأقل سعرًا</option>
-            <option value="high">الأعلى سعرًا</option>
-        </select>
-    </div>
+                card.innerHTML = `
+                    <img src="${p.image || 'https://via.placeholder.com/300x200'}" alt="${p.name}" class="product-img">
+                    <div class="product-info">
+                        <div class="product-title">${p.name}</div>
+                        <div class="product-specs">${p.specs}</div>
+                        <div class="product-price">${p.price} جنيه</div>
+                        <a href="${whatsappLink}" target="_blank" class="btn-whatsapp">اطلب عبر واتساب 💬</a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
 
-    <div class="products" id="productsList"></div>
-</main>
+        function filterProducts() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const brand = document.getElementById('brandFilter').value;
 
-<!-- FOOTER -->
-<footer id="contact">
-    <img src="logo.jpg" class="footer-logo" alt="Lab Tech">
-    <h2>LAB TECH</h2>
-    <p>لابتوبات بأفضل جودة وأسعار مميزة</p>
+            const filtered = allProducts.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(search) || p.specs.toLowerCase().includes(search);
+                const matchesBrand = brand === "" || p.brand === brand;
+                return matchesSearch && matchesBrand;
+            });
 
-    <div class="social-links">
-        <a class="social-btn footer-whatsapp" href="https://wa.me/201061543727" target="_blank">واتساب: 01061543727</a>
-        <a class="social-btn footer-facebook" href="https://www.facebook.com/laptak2/" target="_blank">صفحتنا على فيسبوك</a>
-    </div>
+            displayProducts(filtered);
+        }
 
-    <p style="margin-top: 25px;">© 2026 LAB TECH - جميع الحقوق محفوظة</p>
-</footer>
-
-<script>
-const whatsappNumber = "201061543727";
-
-// جلب المنتجات من لوحة التحكم أو استخدام الافتراضية
-const defaultProducts = [
-    {
-        id: 1,
-        name: "Dell Latitude 5400",
-        brand: "Dell",
-        ram: "8GB",
-        specs: "Core i5 8th Gen | RAM 8GB | SSD 256GB",
-        price: 9800,
-        image: "https://placehold.co/600x400?text=Dell+Latitude"
-    }
-];
-
-function showProducts() {
-    const products = JSON.parse(localStorage.getItem('my_laptops')) || defaultProducts;
-    const list = document.getElementById("productsList");
-    const search = document.getElementById("search").value.toLowerCase();
-    const brand = document.getElementById("brand").value;
-    const ram = document.getElementById("ram").value;
-    const sort = document.getElementById("sort").value;
-
-    let result = products.filter(p => {
-        const matchesSearch = p.name.toLowerCase().includes(search) || p.specs.toLowerCase().includes(search);
-        const matchesBrand = !brand || p.brand === brand;
-        const matchesRam = !ram || p.ram === ram;
-        return matchesSearch && matchesBrand && matchesRam;
-    });
-
-    if (sort === "low") {
-        result.sort((a, b) => a.price - b.price);
-    } else if (sort === "high") {
-        result.sort((a, b) => b.price - a.price);
-    }
-
-    list.innerHTML = "";
-
-    if (result.length === 0) {
-        list.innerHTML = '<div class="empty">لا توجد أجهزة مطابقة للبحث</div>';
-        return;
-    }
-
-    result.forEach(p => {
-        const card = document.createElement("article");
-        card.className = "product";
-
-        const img = document.createElement("img");
-        img.src = p.image;
-        img.alt = p.name;
-
-        const info = document.createElement("div");
-        info.className = "product-info";
-
-        const name = document.createElement("h3");
-        name.textContent = p.name;
-
-        const specs = document.createElement("p");
-        specs.className = "specs";
-        specs.textContent = p.specs;
-
-        const price = document.createElement("div");
-        price.className = "price";
-        price.textContent = Number(p.price).toLocaleString("en-US") + " جنيه";
-
-        const button = document.createElement("button");
-        button.className = "btn whatsapp";
-        button.textContent = "احجز عبر واتساب";
-
-        button.onclick = () => {
-            const message = `السلام عليكم، حابب أستفسر عن حجز الجهاز ده:\n📌 *${p.name}*\n💻 المواصفات: ${p.specs}\n💰 السعر: ${p.price} جنيه`;
-            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-            window.open(url, "_blank");
-        };
-
-        info.append(name, specs, price, button);
-        card.append(img, info);
-        list.appendChild(card);
-    });
-}
-
-document.addEventListener("DOMContentLoaded", showProducts);
-</script>
-
+        window.onload = loadProducts;
+    </script>
 </body>
 </html>
