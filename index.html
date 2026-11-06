@@ -3,148 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAB TECH | لابتوبات استيراد بحالة الجديد</title>
+    <title>LAB TECH - متجر اللابتوبات</title>
     <style>
-        :root {
-            --primary: #2563eb;
-            --dark: #1e293b;
-            --bg: #f8fafc;
-            --white: #ffffff;
-            --accent: #22c55e;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg); color: var(--dark); direction: rtl; }
-        header { background: var(--dark); color: var(--white); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .logo-area { display: flex; align-items: center; gap: 10px; }
-        .logo-area img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
-        h1 { font-size: 1.5rem; }
-        nav { display: flex; gap: 15px; }
-        nav a { color: var(--white); text-decoration: none; font-weight: 600; transition: color 0.3s; }
-        nav a:hover { color: var(--primary); }
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
-        .hero { background: linear-gradient(135deg, var(--dark), var(--primary)); color: var(--white); padding: 3rem 2rem; border-radius: 12px; text-align: center; margin-bottom: 2rem; }
-        .hero h2 { font-size: 2.2rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1.1rem; opacity: 0.9; }
-        .filters { display: flex; gap: 15px; margin-bottom: 2rem; flex-wrap: wrap; background: var(--white); padding: 1rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .filters select, .filters input { padding: 0.7rem; border: 1px solid #cbd5e1; border-radius: 6px; flex: 1; min-width: 200px; font-size: 1rem; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .product-card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; display: flex; flex-direction: column; }
-        .product-card:hover { transform: translateY(-5px); }
-        .product-img { width: 100%; height: 200px; object-fit: cover; background: #e2e8f0; }
-        .product-info { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
-        .product-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--dark); }
-        .product-specs { font-size: 0.9rem; color: #64748b; margin-bottom: 1rem; line-height: 1.6; flex-grow: 1; }
-        .product-price { font-size: 1.3rem; font-weight: bold; color: var(--primary); margin-bottom: 1rem; }
-        .btn-whatsapp { background: var(--accent); color: var(--white); text-align: center; padding: 0.7rem; border-radius: 6px; text-decoration: none; font-weight: bold; display: block; transition: background 0.3s; }
-        .btn-whatsapp:hover { background: #16a34a; }
-        footer { background: var(--dark); color: var(--white); text-align: center; padding: 1.5rem; margin-top: 3rem; }
+        body { font-family: Tahoma, sans-serif; background: #f9f9f9; margin: 0; padding: 0; direction: rtl; }
+        header { background: #222; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 22px; color: #28a745; }
+        .admin-link { color: white; text-decoration: none; background: #007bff; padding: 8px 12px; border-radius: 4px; font-size: 14px; }
+        .admin-link:hover { background: #0056b3; }
+        
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        
+        .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+        .product-card img.main-img { width: 100%; height: 180px; object-fit: cover; border-radius: 6px; background: #eee; }
+        
+        .thumbnails-container { display: flex; gap: 6px; margin-top: 10px; overflow-x: auto; padding-bottom: 5px; }
+        .thumbnails-container img { width: 45px; height: 45px; object-fit: cover; cursor: pointer; border: 2px solid transparent; border-radius: 4px; transition: 0.2s; }
+        .thumbnails-container img:hover, .thumbnails-container img.active { border-color: #007bff; }
+        
+        .product-card h3 { margin: 10px 0 5px 0; font-size: 18px; color: #333; }
+        .product-card p { color: #666; font-size: 14px; margin: 0 0 10px 0; line-height: 1.4; }
+        .price { color: #28a745; font-weight: bold; font-size: 17px; margin-bottom: 10px; display: block; }
+        
+        .whatsapp-btn { background: #25d366; color: white; text-align: center; padding: 8px; text-decoration: none; border-radius: 4px; font-weight: bold; display: block; }
+        .whatsapp-btn:hover { background: #1ebe5d; }
+        
+        .no-products { text-align: center; color: #777; grid-column: 1 / -1; padding: 40px; font-size: 18px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-area">
-            <img src="logo.jpg" alt="LAB TECH Logo" onerror="this.src='https://via.placeholder.com/45'">
-            <h1>LAB TECH</h1>
-        </div>
-        <nav>
-            <a href="#home">الرئيسية</a>
-            <a href="#products">اللابتوبات</a>
-        </nav>
-    </header>
+<header>
+    <h1>LAB TECH</h1>
+    <a href="admin.html" class="admin-link">لوحة التحكم (Admin)</a>
+</header>
 
-    <div class="container" id="home">
-        <div class="hero">
-            <h2>أقوى لابتوبات الاستيراد بحالة الزيرو</h2>
-            <p>اختر جهازك المفضل بأفضل الأسعار وبضمان ومواصفات تناسب كل احتياجاتك الهندسية والبرمجية.</p>
-        </div>
-
-        <div class="filters">
-            <input type="text" id="searchInput" placeholder="ابحث باسم الموديل أو المعالج..." oninput="filterProducts()">
-            <select id="brandFilter" onchange="filterProducts()">
-                <option value="">جميع الماركات</option>
-                <option value="Dell">Dell</option>
-                <option value="HP">HP</option>
-                <option value="Lenovo">Lenovo</option>
-            </select>
-        </div>
-
-        <div id="productsGrid" class="products-grid">
-            <!-- سيتم جلب اللابتوبات هنا تلقائياً من الـ localStorage -->
-        </div>
+<div class="container">
+    <h2 style="color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;">عروض اللابتوبات المتاحة</h2>
+    <div class="products-grid" id="storeProductsContainer">
+        <!-- سيتم جلب اللابتوبات هنا تلقائياً -->
     </div>
+</div>
 
-    <footer>
-        <p>جميع الحقوق محفوظة © LAB TECH | تواصل معنا عبر واتساب: 201061543727+</p>
-    </footer>
+<script>
+    // دالة تغيير الصورة الأساسية عند الضغط على أي صورة مصغرة
+    function changeMainImage(thumbElement, mainImgId) {
+        const mainImg = document.getElementById(mainImgId);
+        if (mainImg) {
+            mainImg.src = thumbElement.src;
+            
+            // إزالة الكلاس النشط من باقي الصور وإضافته للصورة المختار
+            const container = thumbElement.parentElement;
+            container.querySelectorAll('img').forEach(img => img.classList.remove('active'));
+            thumbElement.classList.add('active');
+        }
+    }
 
-    <script>
-        let allProducts = [];
+    // عرض المنتجات في المتجر الرئيسي
+    function renderStoreProducts() {
+        const container = document.getElementById('storeProductsContainer');
+        const products = JSON.parse(localStorage.getItem('labtech_products')) || [];
+        container.innerHTML = '';
 
-        function loadProducts() {
-            const stored = localStorage.getItem('labtech_products');
-            if (stored) {
-                allProducts = JSON.parse(stored);
-            } else {
-                // منتجات تجريبية لو اللوكال ستوريدج فاضية
-                allProducts = [
-                    {
-                        id: 1,
-                        name: "Dell Latitude 5490",
-                        brand: "Dell",
-                        price: "12500",
-                        specs: "Core i5 الجيل الثامن - رامات 16 جيجا - هارد 256 SSD - شاشة 14 بوصة",
-                        image: "https://via.placeholder.com/300x200?text=Dell+Laptop"
-                    }
-                ];
-                localStorage.setItem('labtech_products', JSON.stringify(allProducts));
+        if (products.length === 0) {
+            container.innerHTML = '<div class="no-products">لا توجد لابتوبات متاحة حالياً. يجدر بك إضافتها من لوحة التحكم!</div>';
+            return;
+        }
+
+        products.forEach(product => {
+            const images = product.images && product.images.length > 0 ? product.images : [product.image || 'logo.jpg'];
+            const primaryImage = images[0];
+            const mainImgId = `main-img-${product.id}`;
+
+            // تجهيز الصور المصغرة إذا كانت الصور أكثر من صورة واحدة
+            let thumbnailsHTML = '';
+            if (images.length > 1) {
+                thumbnailsHTML = `<div class="thumbnails-container">`;
+                images.forEach((imgSrc, idx) => {
+                    const activeClass = idx === 0 ? 'active' : '';
+                    thumbnailsHTML += `<img src="${imgSrc}" class="${activeClass}" onclick="changeMainImage(this, '${mainImgId}')">`;
+                });
+                thumbnailsHTML += `</div>`;
             }
-            displayProducts(allProducts);
-        }
 
-        function displayProducts(products) {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <div>
+                    <img id="${mainImgId}" class="main-img" src="${primaryImage}" alt="${product.name}">
+                    ${thumbnailsHTML}
+                    <h3>${product.name}</h3>
+                    <p>${product.specs}</p>
+                    <span class="price">${product.price} جنيه</span>
+                </div>
+                <a href="https://wa.me/201061543727?text=مرحباً، أنا مهتم بشراء لابتوب: ${encodeURIComponent(product.name)} بسعر ${product.price} جنيه" target="_blank" class="whatsapp-btn">اطلب عبر واتساب</a>
+            `;
+            container.appendChild(card);
+        });
+    }
 
-            if (products.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 2rem;">لا توجد لابتوبات مضافة حالياً.</p>';
-                return;
-            }
+    // تشغيل عرض المنتجات عند فتح الصفحة
+    renderStoreProducts();
+</script>
 
-            products.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                
-                const message = encodeURIComponent(`مرحباً، أنا مهتم بشراء لابتوب (${p.name}) بسعر (${p.price} جنيه). هل هو متوفر؟`);
-                const whatsappLink = `https://wa.me/201061543727?text=${message}`;
-
-                card.innerHTML = `
-                    <img src="${p.image || 'https://via.placeholder.com/300x200'}" alt="${p.name}" class="product-img">
-                    <div class="product-info">
-                        <div class="product-title">${p.name}</div>
-                        <div class="product-specs">${p.specs}</div>
-                        <div class="product-price">${p.price} جنيه</div>
-                        <a href="${whatsappLink}" target="_blank" class="btn-whatsapp">اطلب عبر واتساب 💬</a>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function filterProducts() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const brand = document.getElementById('brandFilter').value;
-
-            const filtered = allProducts.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(search) || p.specs.toLowerCase().includes(search);
-                const matchesBrand = brand === "" || p.brand === brand;
-                return matchesSearch && matchesBrand;
-            });
-
-            displayProducts(filtered);
-        }
-
-        window.onload = loadProducts;
-    </script>
 </body>
 </html>

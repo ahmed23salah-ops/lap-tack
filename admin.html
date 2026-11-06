@@ -3,175 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم LAB TECH</title>
+    <title>LAB TECH - لوحة التحكم</title>
     <style>
-        :root {
-            --primary: #2563eb;
-            --dark: #1e293b;
-            --bg: #f8fafc;
-            --white: #ffffff;
-            --danger: #ef4444;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg); color: var(--dark); direction: rtl; padding: 2rem; }
-        .container { max-width: 900px; margin: 0 auto; background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        h2 { margin-bottom: 1.5rem; color: var(--dark); border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
-        .form-group { margin-bottom: 1rem; }
-        label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
-        input, select, textarea { width: 100%; padding: 0.7rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; }
-        button { background: var(--primary); color: var(--white); border: none; padding: 0.8rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; font-weight: bold; transition: background 0.3s; }
-        button:hover { background: #1d4ed8; }
-        .product-list { margin-top: 2rem; }
-        .admin-item { display: flex; justify-content: space-between; align-items: center; background: #f1f5f9; padding: 1rem; border-radius: 6px; margin-bottom: 0.8rem; }
-        .btn-delete { background: var(--danger); padding: 0.4rem 0.8rem; font-size: 0.9rem; }
-        .btn-delete:hover { background: #dc2626; }
-        .back-link { display: inline-block; margin-bottom: 1.5rem; color: var(--primary); text-decoration: none; font-weight: bold; }
-        .back-link:hover { text-decoration: underline; }
+        body { font-family: Tahoma, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; direction: rtl; }
+        .container { max-width: 600px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: auto; }
+        h2 { text-align: center; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"], textarea, input[type="file"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+        button:hover { background: #218838; }
+        .product-list { margin-top: 20px; }
+        .product-item { background: #f9f9f9; padding: 10px; border: 1px solid #ddd; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; }
+        .product-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+        .delete-btn { background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .delete-btn:hover { background: #c82333; }
     </style>
 </head>
 <body>
 
-    <script>
-        // نظام حماية لوحة التحكم بكلمة سر
-        const secretPass = "8642"; // 👈 يمكنك تغيير كلمة السر هنا بالرقم الذي تريده
-        const userInput = prompt("برجاء أدخل كلمة السر لدخول لوحة تحكم LAB TECH:");
+<div class="container">
+    <h2>إدارة لابتوبات LAB TECH</h2>
+    
+    <form id="productForm">
+        <div class="form-group">
+            <label>اسم اللابتوب والمواصفات المختصرة:</label>
+            <input type="text" id="productName" required placeholder="مثال: Dell Latitude i5 الجيل الثامن">
+        </div>
         
-        if (userInput !== secretPass) {
-            alert("كلمة السر غير صحيحة!");
-            window.location.href = "index.html";
-        }
-    </script>
-
-    <div class="container">
-        <a href="index.html" class="back-link">← العودة لموقع العرض الرئيسي</a>
-        <h2>إدارة لابتوبات LAB TECH (لوحة التحكم)</h2>
-
-        <div class="form-group">
-            <label>اسم الموديل:</label>
-            <input type="text" id="pName" placeholder="مثال: Dell Latitude 5490">
-        </div>
-
-        <div class="form-group">
-            <label>الماركة:</label>
-            <select id="pBrand">
-                <option value="Dell">Dell</option>
-                <option value="HP">HP</option>
-                <option value="Lenovo">Lenovo</option>
-            </select>
-        </div>
-
         <div class="form-group">
             <label>السعر (بالجنيه):</label>
-            <input type="number" id="pPrice" placeholder="مثال: 12500">
+            <input type="number" id="productPrice" required placeholder="مثال: 12500">
         </div>
 
         <div class="form-group">
-            <label>المواصفات التفصيلية:</label>
-            <textarea id="pSpecs" rows="3" placeholder="Core i5 الجيل الثامن - رامات 16 - هارد 256 SSD"></textarea>
+            <label>التفاصيل والمواصفات الكاملة:</label>
+            <textarea id="productSpecs" rows="3" required placeholder="الرامات، الهارد، كارت الشاشة..."></textarea>
         </div>
 
         <div class="form-group">
-            <label>صورة اللابتوب (رفع ملف أو رابط):</label>
-            <input type="file" id="pImageFile" accept="image/*" onchange="convertImage(this)">
-            <input type="hidden" id="pImageBase64">
+            <label>صور اللابتوب (يمكنك اختيار عدة صور معاً):</label>
+            <input type="file" id="productImages" accept="image/*" multiple required>
+            <small style="color: #666; display: block; margin-top: 4px;">اضغط على زر اختيار الملفات وحدد أكثر من صورة دفعة واحدة.</small>
         </div>
 
-        <button onclick="addProduct()">إضافة اللابتوب للموقع 🚀</button>
+        <button type="submit">إضافة اللابتوب للموقع</button>
+    </form>
 
-        <div class="product-list">
-            <h2>اللابتوبات الحالية في المخزن</h2>
-            <div id="adminProductsContainer"></div>
-        </div>
+    <div class="product-list">
+        <h3>اللابتوبات الحالية في المستودع:</h3>
+        <div id="adminProductsContainer"></div>
     </div>
+</div>
 
-    <script>
-        let products = [];
-        let currentImageBase64 = "";
-
-        function loadAdminProducts() {
-            const stored = localStorage.getItem('labtech_products');
-            if (stored) {
-                products = JSON.parse(stored);
-            }
-            renderAdminList();
-        }
-
-        function convertImage(input) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    currentImageBase64 = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function addProduct() {
-            const name = document.getElementById('pName').value.trim();
-            const brand = document.getElementById('pBrand').value;
-            const price = document.getElementById('pPrice').value.trim();
-            const specs = document.getElementById('pSpecs').value.trim();
-
-            if (!name || !price) {
-                alert("من فضلك أدخل اسم اللابتوب والسعر على الأقل!");
-                return;
-            }
-
-            const newProduct = {
-                id: Date.now(),
-                name,
-                brand,
-                price,
-                specs,
-                image: currentImageBase64 || 'https://via.placeholder.com/300x200?text=No+Image'
-            };
-
-            products.push(newProduct);
-            localStorage.setItem('labtech_products', JSON.stringify(products));
+<script>
+    // دالة لتحويل عدة صور إلى مصفوفة Base64
+    function getImagesBase64(fileInput) {
+        return new Promise((resolve) => {
+            const files = Array.from(fileInput.files);
+            if (files.length === 0) return resolve([]);
             
-            // إعادة تعيين الحقول
-            document.getElementById('pName').value = '';
-            document.getElementById('pPrice').value = '';
-            document.getElementById('pSpecs').value = '';
-            document.getElementById('pImageFile').value = '';
-            currentImageBase64 = '';
-
-            renderAdminList();
-            alert("تم إضافة اللابتوب بنجاح وتم تحديث الموقع الرئيسي فوراً! 🎉");
-        }
-
-        function deleteProduct(id) {
-            if (confirm("هل أنت متأكد من حذف هذا الجهاز من المخزن؟")) {
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('labtech_products', JSON.stringify(products));
-                renderAdminList();
-            }
-        }
-
-        function renderAdminList() {
-            const container = document.getElementById('adminProductsContainer');
-            container.innerHTML = '';
-
-            if (products.length === 0) {
-                container.innerHTML = '<p style="color: #64748b;">لا توجد لابتوبات مضافة حالياً.</p>';
-                return;
-            }
-
-            products.forEach(p => {
-                const item = document.createElement('div');
-                item.className = 'admin-item';
-                item.innerHTML = `
-                    <div>
-                        <strong>${p.name}</strong> - <span>${p.price} جنيه</span>
-                    </div>
-                    <button class="btn-delete" onclick="deleteProduct(${p.id})">حذف 🗑️</button>
-                `;
-                container.appendChild(item);
+            const promises = files.map(file => {
+                return new Promise((res) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => res(e.target.result);
+                    reader.readAsDataURL(file);
+                });
             });
+            
+            Promise.all(promises).then(imagesBase64 => resolve(imagesBase64));
+        });
+    }
+
+    // جلب المنتجات من localStorage
+    function getProducts() {
+        return JSON.parse(localStorage.getItem('labtech_products')) || [];
+    }
+
+    // حفظ المنتجات
+    function saveProducts(products) {
+        localStorage.setItem('labtech_products', JSON.stringify(products));
+    }
+
+    // عرض المنتجات في لوحة التحكم
+    function renderAdminProducts() {
+        const container = document.getElementById('adminProductsContainer');
+        const products = getProducts();
+        container.innerHTML = '';
+
+        if (products.length === 0) {
+            container.innerHTML = '<p style="color: #777;">لا توجد لابتوبات مضافة حالياً.</p>';
+            return;
         }
 
-        window.onload = loadAdminProducts;
-    </script>
+        products.forEach((product, index) => {
+            const firstImg = product.images && product.images.length > 0 ? product.images[0] : 'logo.jpg';
+            const count = product.images ? product.images.length : 0;
+            
+            const div = document.createElement('div');
+            div.className = 'product-item';
+            div.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="${firstImg}" alt="${product.name}">
+                    <div>
+                        <strong>${product.name}</strong><br>
+                        <span style="color: green; font-weight: bold;">${product.price} جنيه</span> | 
+                        <span style="color: #555; font-size: 12px;">(${count} صور مرفوعة)</span>
+                    </div>
+                </div>
+                <button class="delete-btn" onclick="deleteProduct(${index})">حذف</button>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // حذف منتج
+    function deleteProduct(index) {
+        if (confirm('هل أنت متأكد من حذف هذا اللابتوب؟')) {
+            const products = getProducts();
+            products.splice(index, 1);
+            saveProducts(products);
+            renderAdminProducts();
+        }
+    }
+
+    // معالجة إرسال النموذج وإضافة المنتج
+    document.getElementById('productForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('productName').value;
+        const price = document.getElementById('productPrice').value;
+        const specs = document.getElementById('productSpecs').value;
+        const imageInput = document.getElementById('productImages');
+
+        const imagesArray = await getImagesBase64(imageInput);
+
+        const newProduct = {
+            id: Date.now(),
+            name: name,
+            price: price,
+            specs: specs,
+            images: imagesArray // حفظ مصفوفة الصور
+        };
+
+        const products = getProducts();
+        products.push(newProduct);
+        saveProducts(products);
+
+        alert('تم إضافة اللابتوب بنجاح!');
+        document.getElementById('productForm').reset();
+        renderAdminProducts();
+    });
+
+    // تشغيل الدالة عند تحميل الصفحة
+    renderAdminProducts();
+</script>
+
 </body>
 </html>
