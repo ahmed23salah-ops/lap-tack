@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحكم LAB TECH</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background: #f5f7fb; padding: 20px; color: #172033; }
+.container { max-width: 650px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+h2 { margin-bottom: 20px; color: #080d18; border-right: 4px solid #168cff; padding-right: 10px; }
+.form-group { margin-bottom: 15px; }
+label { display: block; margin-bottom: 5px; font-weight: bold; }
+input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; }
+button { background: #168cff; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
+button:hover { background: #0872d8; }
+.preview-img { width: 100px; height: 70px; object-fit: contain; margin-top: 10px; display: none; border: 1px solid #ddd; border-radius: 6px; }
+.product-item { display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 10px; border-radius: 8px; margin-top: 10px; border: 1px solid #e2e8f0; }
+.product-item img { width: 50px; height: 50px; object-fit: contain; border-radius: 4px; }
+.delete-btn { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; width: auto; margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>إضافة لابتوب جديد 💻</h2>
+    
+    <div class="form-group">
+        <label>اسم اللابتوب:</label>
+        <input type="text" id="name" placeholder="مثال: Dell Latitude 5400">
+    </div>
+
+    <div class="form-group">
+        <label>الشركة:</label>
+        <select id="brand">
+            <option value="Dell">Dell</option>
+            <option value="HP">HP</option>
+            <option value="Lenovo">Lenovo</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>الرامات:</label>
+        <select id="ram">
+            <option value="8GB">8GB</option>
+            <option value="16GB">16GB</option>
+            <option value="32GB">32GB</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>المواصفات الكاملة:</label>
+        <input type="text" id="specs" placeholder="Core i5 8th Gen | RAM 8GB | SSD 256GB">
+    </div>
+
+    <div class="form-group">
+        <label>السعر (بالجنيه):</label>
+        <input type="number" id="price" placeholder="9500">
+    </div>
+
+    <!-- إضافة صورة من الموبايل أو الكمبيوتر -->
+    <div class="form-group">
+        <label>اختر صورة اللابتوب من جهازك 📷:</label>
+        <input type="file" id="imageFile" accept="image/*" onchange="previewImage(event)">
+        <img id="imgPreview" class="preview-img" alt="معاينة الصورة">
+    </div>
+
+    <button onclick="addProduct()">حفظ اللابتوب ➕</button>
+
+    <h3 style="margin-top: 30px;">الأجهزة المضافة حالياً:</h3>
+    <div id="adminProductList"></div>
+</div>
+
+<script>
+let currentBase64Image = "";
+
+// معاينة الصورة عند اختيارها تحويلها لنص
+function previewImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            currentBase64Image = e.target.result;
+            const img = document.getElementById('imgPreview');
+            img.src = currentBase64Image;
+            img.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+function getProducts() {
+    return JSON.parse(localStorage.getItem('my_laptops')) || [];
+}
+
+function addProduct() {
+    const name = document.getElementById('name').value;
+    const brand = document.getElementById('brand').value;
+    const ram = document.getElementById('ram').value;
+    const specs = document.getElementById('specs').value;
+    const price = document.getElementById('price').value;
+
+    if(!name || !price) {
+        alert("يرجى كتابة اسم اللابتوب والسعر!");
+        return;
+    }
+
+    const image = currentBase64Image || "https://placehold.co/600x400?text=Laptop";
+
+    const products = getProducts();
+    products.push({ id: Date.now(), name, brand, ram, specs, price: Number(price), image });
+    localStorage.setItem('my_laptops', JSON.stringify(products));
+
+    alert("تم إضافة اللابتوب مع الصورة بنجاح! 🥳");
+    location.reload();
+}
+
+function deleteProduct(id) {
+    let products = getProducts();
+    products = products.filter(p => p.id !== id);
+    localStorage.setItem('my_laptops', JSON.stringify(products));
+    renderAdminProducts();
+}
+
+function renderAdminProducts() {
+    const list = document.getElementById('adminProductList');
+    const products = getProducts();
+    list.innerHTML = "";
+    products.forEach(p => {
+        list.innerHTML += `
+            <div class="product-item">
+                <img src="${p.image}" alt="صورة الجهاز">
+                <div>
+                    <strong>${p.name}</strong><br>
+                    <small>${p.price} جنيه</small>
+                </div>
+                <button class="delete-btn" onclick="deleteProduct(${p.id})">حذف</button>
+            </div>
+        `;
+    });
+}
+
+renderAdminProducts();
+</script>
+
+</body>
+</html>
