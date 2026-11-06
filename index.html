@@ -8,8 +8,6 @@
         body { font-family: Tahoma, sans-serif; background: #f9f9f9; margin: 0; padding: 0; direction: rtl; }
         header { background: #222; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
         header h1 { margin: 0; font-size: 22px; color: #28a745; }
-        .admin-link { color: white; text-decoration: none; background: #007bff; padding: 8px 12px; border-radius: 4px; font-size: 14px; }
-        .admin-link:hover { background: #0056b3; }
         
         .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
@@ -35,7 +33,6 @@
 
 <header>
     <h1>LAB TECH</h1>
-
 </header>
 
 <div class="container">
@@ -52,7 +49,6 @@
         if (mainImg) {
             mainImg.src = thumbElement.src;
             
-            // إزالة الكلاس النشط من باقي الصور وإضافته للصورة المختار
             const container = thumbElement.parentElement;
             container.querySelectorAll('img').forEach(img => img.classList.remove('active'));
             thumbElement.classList.add('active');
@@ -66,7 +62,7 @@
         container.innerHTML = '';
 
         if (products.length === 0) {
-            container.innerHTML = '<div class="no-products">لا توجد لابتوبات متاحة حالياً. يجدر بك إضافتها من لوحة التحكم!</div>';
+            container.innerHTML = '<div class="no-products">لا توجد لابتوبات متاحة حالياً. ترقبوا أحدث العروض قريباً!</div>';
             return;
         }
 
@@ -75,7 +71,6 @@
             const primaryImage = images[0];
             const mainImgId = `main-img-${product.id}`;
 
-            // تجهيز الصور المصغرة إذا كانت الصور أكثر من صورة واحدة
             let thumbnailsHTML = '';
             if (images.length > 1) {
                 thumbnailsHTML = `<div class="thumbnails-container">`;
@@ -102,7 +97,6 @@
         });
     }
 
-    // تشغيل عرض المنتجات عند فتح الصفحة
     renderStoreProducts();
 </script>
 
